@@ -1,0 +1,78 @@
+@import url('estilos-blog.css');
+
+@import url('https://fonts.googleapis.com/css2?family=Raleway&family=Roboto:ital,wght@0,100;0,300;0,400;1,100;1,300;1,700&family=Source+Code+Pro:wght@400;700&display=swap');
+
+body{
+	font-family: 'Source Code Pro', monospace;
+}
+
+.container{
+	padding: 2rem;
+}
+
+.profile-information{
+	background-color: #E3E3E3;
+}
+
+.profile-information .container{
+	display: flex;	
+	flex-wrap: wrap;
+}
+
+.profile-information .profile-image{
+	flex: 0 1 200px;
+	margin-right: 1rem;
+}
+
+.profile-image img{
+	width: 100%;
+	aspect-ratio:1/1;
+}
+
+.profile-information .profile-description{
+	flex: 1 1 350px;
+	padding-right: 2rem;
+}
+
+
+.profile-proyects h2{
+	margin: 0;
+	text-align: center;
+	padding-bottom: 1rem;
+	border-bottom: 1px solid #DFDFDF;
+}
+
+.container-proyects{
+	display: grid;
+	grid-template-columns: repeat(auto-fit,minmax(200px,30%));
+	justify-content: space-around;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

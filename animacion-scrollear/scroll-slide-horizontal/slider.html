@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      *,
+      *::after,
+      *::before {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        line-height: 1.2;
+      }
+      html {
+        box-sizing: inherit;
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+          Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue",
+          sans-serif;
+        background-color: 060606;
+      }
+
+      .main-articles {
+        background: rgb(48,48,48);
+        background: radial-gradient(circle, rgba(48,48,48,1) 0%, rgba(79,79,79,1) 46%, rgba(171,171,171,1) 100%);
+        display: grid;
+        grid-auto-flow: column;
+        grid-auto-columns: 100vw;
+        align-items: center;
+        width: 100%;
+        height: 400px;
+        /* para mobile deberia desaparecer este slider */
+        min-width: 480px; 
+        overflow-y: hidden;
+        overflow-x: scroll;
+        scroll-snap-type: x mandatory;
+      }
+
+      section {
+        height: 350px;
+        padding-inline: 10px;
+        scroll-snap-align: start;
+        display: grid;
+        /* place-content: center;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 250px));
+        gap: 1rem; */
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        align-items: center;
+      }
+
+      article {
+        background-color: #f6f6f6;
+        border: 1px solid #d2d2d2;
+        flex-grow: 0;
+        flex-basis: 250px;
+        height: 100%;
+
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        padding: 1rem;
+        border-radius: 1rem;
+        /* para la animacion */
+        animation: fancy-in linear both;
+        animation-timeline: view(x);
+
+        & img {
+          width: 100%;          
+          max-height: 150px;
+          object-fit: contain;
+          object-position: center;
+        }
+
+        & h5 {
+          color: lightseagreen;
+        }
+
+        & p {
+          font-size: 12px;
+        }
+        
+        & a {
+          font-size: 12px;
+          text-decoration: none;
+        }
+      }
+
+      /* card entry/exit animations */
+      @keyframes fancy-in {
+        /* Al entrar cuando se este viendo la card se trasladara 
+        25 del ancho de la pantalla */
+        0% {
+          transform: translateX(25vw);
+        }
+        /* Cuando este del 20 al 80% no se trasladara y se mostrara
+        sin opacidad */
+        20%,
+        80% {
+          opacity: 1;
+          transform: none;
+        }
+        /* Aqui la card se trasladara el ancho de su tamaño para que
+        no desaparezca de la pantalla e ira volviendose opaco */
+        100% {
+          transform: translateX(100%) scale(0.95);
+          opacity: 0;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Slider</h1>
+    <div class="main-articles">
+      <section id="section-1">
+        <article class="card">
+          <picture>
+            <img src="https://assets.codepen.io/2585/Whoa.svg" />
+          </picture>
+          <h5>ALorem ipsum dolor sit amet</h5>
+          <p>Ut enim ad minim veniam, quis nostrud.</p>
+          <a href="https://www.transhumans.xyz">Check it out</a>
+        </article>
+
+        <article class="card">
+          <picture>
+            <img
+              src="https://assets.codepen.io/2585/Walking+Contradiction.svg"
+            />
+          </picture>
+          <h5>Consectetur adipiscing elit</h5>
+          <p>Exercitation ullamco laboris nisi ut aliquip ex ea commodo.</p>
+          <a href="https://www.transhumans.xyz">Some action</a>
+        </article>
+
+        <article class="card">
+          <picture>
+            <img
+              class="card-img"
+              src="https://assets.codepen.io/2585/Polka+Pup.svg"
+              alt="placeholder-hand-drawn-vector"
+            />
+          </picture>
+          <h5>Sed do eiusmod tempor incididunt</h5>
+          <p>Duis aute irure dolor in reprehenderit.</p>
+          <a href="https://www.transhumans.xyz">Ready</a>
+        </article>
+      </section>
+      <section id="section-2">
+        <article class="card">
+          <picture>
+            <img src="https://assets.codepen.io/2585/Pilot.svg" />
+          </picture>
+          <h5>Lorem ipsum dolor sit amet</h5>
+          <p>Ut enim ad minim veniam, quis nostrud.</p>
+          <a href="https://www.transhumans.xyz">Check it out</a>
+        </article>
+
+        <article class="card">
+          <picture>
+            <img src="https://assets.codepen.io/2585/Cube+Leg.svg" />
+          </picture>
+          <h5>Consectetur adipiscing elit</h5>
+          <p>Exercitation ullamco laboris nisi ut aliquip ex ea commodo.</p>
+          <a href="https://www.transhumans.xyz">Some action</a>
+        </article>
+
+        <article class="card">
+          <picture>
+            <img
+              class="card-img"
+              src="https://assets.codepen.io/2585/Growth.svg"
+              alt="placeholder-hand-drawn-vector"
+            />
+          </picture>
+          <h5>Sed do eiusmod tempor incididunt</h5>
+          <p>Duis aute irure dolor in reprehenderit.</p>
+          <a href="https://www.transhumans.xyz">Ready</a>
+        </article>
+      </section>
+      <section id="section-3">
+        <article class="card">
+          <picture>
+            <img src="https://assets.codepen.io/2585/Gamestation.svg" />
+          </picture>
+          <h5>Lorem ipsum dolor sit amet</h5>
+          <p>Ut enim ad minim veniam, quis nostrud.</p>
+          <a href="https://www.transhumans.xyz">Check it out</a>
+        </article>
+
+        <article class="card">
+          <picture>
+            <img src="https://assets.codepen.io/2585/Kiddo.svg" />
+          </picture>
+          <h5>Consectetur adipiscing elit</h5>
+          <p>Exercitation ullamco laboris nisi ut aliquip ex ea commodo.</p>
+          <a href="https://www.transhumans.xyz">Some action</a>
+        </article>
+
+        <article class="card">
+          <picture>
+            <img
+              class="card-img"
+              src="https://assets.codepen.io/2585/Reflecting.svg"
+              alt="placeholder-hand-drawn-vector"
+            />
+          </picture>
+          <h5>Sed do eiusmod tempor incididunt</h5>
+          <p>Duis aute irure dolor in reprehenderit.</p>
+          <a href="https://www.transhumans.xyz">Ready</a>
+        </article>
+      </section>
+      <section id="section-4">
+        <article class="card">
+          <picture>
+            <img src="https://assets.codepen.io/2585/Rogue.svg" />
+          </picture>
+          <h5>Lorem ipsum dolor sit amet</h5>
+          <p>Ut enim ad minim veniam, quis nostrud.</p>
+          <a href="https://www.transhumans.xyz">Check it out</a>
+        </article>
+
+        <article class="card">
+          <picture>
+            <img src="https://assets.codepen.io/2585/Waiting.svg" />
+          </picture>
+          <h5>Consectetur adipiscing elit</h5>
+          <p>Exercitation ullamco laboris nisi ut aliquip ex ea commodo.</p>
+          <a href="https://www.transhumans.xyz">Some action</a>
+        </article>
+
+        <article class="card">
+          <picture>
+            <img
+              class="card-img"
+              src="https://assets.codepen.io/2585/Runner.svg"
+              alt="placeholder-hand-drawn-vector"
+            />
+          </picture>
+          <h5>Sed do eiusmod tempor incididunt</h5>
+          <p>Duis aute irure dolor in reprehenderit.</p>
+          <a href="https://www.transhumans.xyz">Ready</a>
+        </article>
+      </section>
+      <!--
+      <section id="section-5">
+        <article class="card">
+          <picture>
+            <img src="https://assets.codepen.io/2585/Plants.svg" />
+          </picture>
+          <h5>Lorem ipsum dolor sit amet</h5>
+          <p>Ut enim ad minim veniam, quis nostrud.</p>
+          <a href="https://www.transhumans.xyz">Check it out</a>
+        </article>
+
+        <article class="card">
+          <picture>
+            <img src="https://assets.codepen.io/2585/Coffee.svg" />
+          </picture>
+          <h5>Consectetur adipiscing elit</h5>
+          <p>Exercitation ullamco laboris nisi ut aliquip ex ea commodo.</p>
+          <a href="https://www.transhumans.xyz">Some action</a>
+        </article>
+
+        <article class="card">
+          <picture>
+            <img
+              class="card-img"
+              src="https://assets.codepen.io/2585/Chaotic+Good.svg"
+              alt="placeholder-hand-drawn-vector"
+            />
+          </picture>
+          <h5>Sed do eiusmod tempor incididunt</h5>
+          <p>Duis aute irure dolor in reprehenderit.</p>
+          <a href="https://www.transhumans.xyz">Ready</a>
+        </article>
+      </section>
+      <section id="section-6">
+        <article class="card">
+          <picture>
+            <img src="https://assets.codepen.io/2585/Jumping.svg" />
+          </picture>
+          <h5>Lorem ipsum dolor sit amet</h5>
+          <p>Ut enim ad minim veniam, quis nostrud.</p>
+          <a href="https://www.transhumans.xyz">Check it out</a>
+        </article>
+
+        <article class="card">
+          <picture>
+            <img src="https://assets.codepen.io/2585/Whoa.svg" />
+          </picture>
+          <h5>Consectetur adipiscing elit</h5>
+          <p>Exercitation ullamco laboris nisi ut aliquip ex ea commodo.</p>
+          <a href="https://www.transhumans.xyz">Some action</a>
+        </article>
+
+        <article class="card">
+          <picture>
+            <img
+              class="card-img"
+              src="https://assets.codepen.io/2585/Pacheco.svg"
+              alt="placeholder-hand-drawn-vector"
+            />
+          </picture>
+          <h5>Sed do eiusmod tempor incididunt</h5>
+          <p>Duis aute irure dolor in reprehenderit.</p>
+          <a href="https://www.transhumans.xyz">Ready</a>
+        </article>
+      </section>
+      <section id="section-7">
+        <article class="card">
+          <picture>
+            <img src="https://assets.codepen.io/2585/Meela+Pantalones.svg" />
+          </picture>
+          <h5>Lorem ipsum dolor sit amet</h5>
+          <p>Ut enim ad minim veniam, quis nostrud.</p>
+          <a href="https://www.transhumans.xyz">Check it out</a>
+        </article>
+
+        <article class="card">
+          <picture>
+            <img src="https://assets.codepen.io/2585/Groceries.svg" />
+          </picture>
+          <h5>Consectetur adipiscing elit</h5>
+          <p>Exercitation ullamco laboris nisi ut aliquip ex ea commodo.</p>
+          <a href="https://www.transhumans.xyz">Some action</a>
+        </article>
+
+        <article class="card">
+          <picture>
+            <img
+              class="card-img"
+              src="https://assets.codepen.io/2585/Fling.svg"
+              alt="placeholder-hand-drawn-vector"
+            />
+          </picture>
+          <h5>Sed do eiusmod tempor incididunt</h5>
+          <p>Duis aute irure dolor in reprehenderit.</p>
+          <a href="https://www.transhumans.xyz">Ready</a>
+        </article>
+      </section>-->
+    </div>
+  </body>
+</html>

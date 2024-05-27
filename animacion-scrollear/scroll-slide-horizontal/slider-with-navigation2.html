@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      *,
+      *::after,
+      *::before {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        line-height: 1.2;
+      }
+      html {
+        scroll-behavior: smooth;
+        box-sizing: inherit;
+        font-family: system-ui, "Open Sans", "Helvetica Neue", sans-serif;        
+      }
+
+      /************************ SLIDERS CARDS *********************/
+
+      .main-articles {
+        scroll-margin-top: 0;
+        scroll-behavior: smooth;
+        background: rgb(48, 48, 48);
+        background: radial-gradient(
+          circle,
+          rgba(48, 48, 48, 1) 0%,
+          rgba(79, 79, 79, 1) 46%,
+          rgba(171, 171, 171, 1) 100%
+        );
+        display: grid;
+        grid-auto-flow: column;
+        grid-auto-columns: 100vw;
+        align-items: start;
+        padding-top: 35px;
+        width: 100%;
+        height: 450px;
+        /* para mobile deberia desaparecer este slider se nota bien hasta 420px*/        
+        overflow-y: hidden;
+        overflow-x: scroll;
+        scroll-snap-type: x mandatory;
+      }
+
+      section {
+        height: 350px;
+        padding-inline: 10px;
+        scroll-snap-align: start;
+        display: grid;
+        /* Define una cuadrícula con 3 columnas, donde cada columna tiene:
+          - Un ancho mínimo de 15 veces el ancho del carácter '0' (15ch).
+          - Un ancho máximo determinado por el menor valor entre 30 veces el ancho del carácter '0' (30ch) 
+            y 25 unidades promedio de ancho de caracteres en sistemas de escritura no latinos (25cqi).
+          Esto asegura que las columnas mantengan un tamaño adaptativo adecuado tanto para textos en 
+          alfabetos latinos como en otros sistemas de escritura más complejos.
+          Nota:  si eliminamos el cqi deja de funcionar el scroll smoth
+        */
+        grid-template-columns: repeat(3, minmax(15ch, min(30ch, 25cqi)));
+        align-items: center;
+        justify-content: center;        
+        width: 100%;
+        gap: 10px;
+      }
+
+      article {
+        background-color: #f6f6f6;
+        border: 1px solid #d2d2d2;        
+        height: 100%;
+
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        padding: 1rem;
+        border-radius: 1rem;
+        /* para la animacion */
+        animation: fancy-in linear both;
+        animation-timeline: view(x);
+
+        & img {
+          width: 100%;
+          max-height: 150px;
+          object-fit: contain;
+          object-position: center;
+        }
+
+        & h5 {
+          color: lightseagreen;
+        }
+
+        & p {
+          font-size: 12px;
+        }
+
+        & a {
+          font-size: 12px;
+          text-decoration: none;
+        }
+      }
+
+      /* card entry/exit animations */
+      @keyframes fancy-in {
+        /* Al entrar cuando se este viendo la card se trasladara 
+        25 del ancho de la pantalla */
+        0% {
+          transform: translateX(25vw);
+        }
+        /* Cuando este del 20 al 80% no se trasladara y se mostrara
+        sin opacidad */
+        20%,
+        80% {
+          opacity: 1;
+          transform: none;
+        }
+        /* Aqui la card se trasladara el ancho de su tamaño para que
+        no desaparezca de la pantalla e ira volviendose opaco */
+        100% {
+          transform: translateX(100%) scale(0.95);
+          opacity: 0;
+        }
+      }
+
+      /************************ PAGINATION *********************/
+      .container {
+        width: 100%;
+        height: auto;
+        transform: translateZ(0);
+        overflow: hidden;
+      }
+
+      /* pagination dots effect */
+      /* scaled out, until in view, then scale 1 */
+      @keyframes dot-selected {
+        0%,
+        100% {
+          scale: 0.75;
+        }
+        50% {
+          scale: 1;
+          background: rgb(140, 140, 140);
+        }
+      }
+
+      .pagination {
+        z-index: 1;
+        position: fixed;
+        /* este tamaño del bottom es calculado a saco */
+        bottom: 30px;
+        left: 0;
+        right: 0;
+        
+        display: flex;
+        place-content: center;
+        gap: 10px;
+        padding: 5px;
+
+        & > a {
+          display: inline-flex;
+          place-content: center;
+          inline-size: 2ch;
+          flex-shrink: 0;
+          aspect-ratio: 1 / 1;
+          border-radius: 50%;
+          overflow: hidden;
+          /* esta linea para el texto en el ancor botarlo al final ya que controla la identacion */          
+          background-color: white;
+
+          &:is(:hover, :focus-visible) {
+            outline: 1px dashed white;
+            outline-offset: 2px;
+          }
+        }
+      }
+
+      /* expose the following view timelines for any elements to observe by name */
+      body {
+        timeline-scope: 
+          --section-1, 
+          --section-2, 
+          --section-3, 
+          --section-4
+        ;
+      }
+
+      /* give each section it's relevant view timeline name */
+      /* note: this must match the name exposed on the body timeline-scope */
+      #section-1 { view-timeline: --section-1 x }
+      #section-2 { view-timeline: --section-2 x }
+      #section-3 { view-timeline: --section-3 x }
+      #section-4 { view-timeline: --section-4 x }
+
+      .pagination > a {
+        animation: dot-selected linear both;
+
+        /* power the scale animation by observing a relevant view timeline */
+        &:nth-child(1) {
+          animation-timeline: --section-1;
+        }
+        &:nth-child(2) {
+          animation-timeline: --section-2;
+        }
+        &:nth-child(3) {
+          animation-timeline: --section-3;
+        }
+        &:nth-child(4) {
+          animation-timeline: --section-4;
+        }
+      }
+
+    </style>
+  </head>
+  <body>
+    <h1>Slider</h1>    
+    <p>
+      Lorem ipsum dolor, sit amet consectetur adipisicing elit. Debitis, dolorem cum. Voluptates temporibus, ut ipsam officia ratione autem, doloribus ullam deleniti provident maxime eum enim! Quaerat fugit sint quia cum!
+      Fuga, non! Deserunt dolore eaque eligendi animi nisi quas quia! Ipsa dolor aliquam pariatur itaque, animi a minus. Quaerat aut totam sequi praesentium suscipit debitis assumenda minus fugiat quos ad.
+      Nulla similique non quam repellat numquam consequatur, esse quas illum eum quis sint sit in minima officia qui eos quidem quos distinctio dignissimos dolor reprehenderit autem dolore assumenda laboriosam. Ex?
+      Animi quibusdam corporis iusto reprehenderit doloremque nemo tenetur excepturi laudantium consectetur neque atque libero impedit rem ullam ipsum obcaecati perspiciatis sit facilis commodi, quos maiores! Labore eum corporis delectus natus?
+      Voluptates velit explicabo dolorem adipisci aliquam accusamus a magni provident eaque odio placeat illum molestias labore, cumque omnis veniam fuga vel quis maxime quibusdam voluptatibus nobis et. Quo, non recusandae?
+      Rerum incidunt voluptatem aut numquam minus ipsum debitis! Dolorum aliquam id sit quibusdam repellat possimus rem at eum. Quibusdam enim architecto tempora velit at dolor ea provident mollitia ratione minima.
+      Vero repellendus suscipit sed distinctio sequi adipisci laborum nam accusamus quam voluptatem nemo saepe similique numquam accusantium, voluptas ducimus voluptates, dolores pariatur! Saepe ab asperiores inventore debitis hic ea nisi!
+      Voluptatibus blanditiis earum, atque labore deserunt perferendis, dicta aut consequatur, voluptatum ab eos quos. Necessitatibus, iste ipsam totam eligendi est, esse corporis expedita dolores consequatur laudantium ab quaerat tempora repudiandae!
+      Beatae, cupiditate maiores dicta quidem ex officia tempora consequuntur nihil quia quo. Voluptates perspiciatis dolores vitae veniam impedit excepturi porro? Modi nobis voluptatibus, ullam nisi tempora repellendus maiores ea eveniet.
+      Perspiciatis aliquam culpa soluta quo. Similique laboriosam consequatur ducimus aliquid minima deserunt eum, nulla, cumque sint sunt tenetur quis ipsa! Totam rem voluptatum minus consequatur incidunt nostrum placeat architecto culpa?
+    </p>
+    <div class="container">
+      <div class="pagination">
+        <a href="#section-1"></a>
+        <a href="#section-2"></a>
+        <a href="#section-3"></a>
+        <a href="#section-4"></a>
+        <!-- <a href="#section-5">Inline page 5</a>
+        <a href="#section-6">Inline page 6</a>
+        <a href="#section-7">Inline page 7</a> -->
+      </div>
+      <div class="main-articles">
+        <section id="section-1">
+          <article class="card">
+            <picture>
+              <img src="https://assets.codepen.io/2585/Whoa.svg" />
+            </picture>
+            <h5>ALorem ipsum dolor sit amet</h5>
+            <p>Ut enim ad minim veniam, quis nostrud.</p>
+            <a href="https://www.transhumans.xyz">Check it out</a>
+          </article>
+
+          <article class="card">
+            <picture>
+              <img
+                src="https://assets.codepen.io/2585/Walking+Contradiction.svg"
+              />
+            </picture>
+            <h5>Consectetur adipiscing elit</h5>
+            <p>Exercitation ullamco laboris nisi ut aliquip ex ea commodo.</p>
+            <a href="https://www.transhumans.xyz">Some action</a>
+          </article>
+
+          <article class="card">
+            <picture>
+              <img
+                class="card-img"
+                src="https://assets.codepen.io/2585/Polka+Pup.svg"
+                alt="placeholder-hand-drawn-vector"
+              />
+            </picture>
+            <h5>Sed do eiusmod tempor incididunt</h5>
+            <p>Duis aute irure dolor in reprehenderit.</p>
+            <a href="https://www.transhumans.xyz">Ready</a>
+          </article>
+        </section>
+        <section id="section-2">
+          <article class="card">
+            <picture>
+              <img src="https://assets.codepen.io/2585/Pilot.svg" />
+            </picture>
+            <h5>Lorem ipsum dolor sit amet</h5>
+            <p>Ut enim ad minim veniam, quis nostrud.</p>
+            <a href="https://www.transhumans.xyz">Check it out</a>
+          </article>
+
+          <article class="card">
+            <picture>
+              <img src="https://assets.codepen.io/2585/Cube+Leg.svg" />
+            </picture>
+            <h5>Consectetur adipiscing elit</h5>
+            <p>Exercitation ullamco laboris nisi ut aliquip ex ea commodo.</p>
+            <a href="https://www.transhumans.xyz">Some action</a>
+          </article>
+
+          <article class="card">
+            <picture>
+              <img
+                class="card-img"
+                src="https://assets.codepen.io/2585/Growth.svg"
+                alt="placeholder-hand-drawn-vector"
+              />
+            </picture>
+            <h5>Sed do eiusmod tempor incididunt</h5>
+            <p>Duis aute irure dolor in reprehenderit.</p>
+            <a href="https://www.transhumans.xyz">Ready</a>
+          </article>
+        </section>
+        <section id="section-3">
+          <article class="card">
+            <picture>
+              <img src="https://assets.codepen.io/2585/Gamestation.svg" />
+            </picture>
+            <h5>Lorem ipsum dolor sit amet</h5>
+            <p>Ut enim ad minim veniam, quis nostrud.</p>
+            <a href="https://www.transhumans.xyz">Check it out</a>
+          </article>
+
+          <article class="card">
+            <picture>
+              <img src="https://assets.codepen.io/2585/Kiddo.svg" />
+            </picture>
+            <h5>Consectetur adipiscing elit</h5>
+            <p>Exercitation ullamco laboris nisi ut aliquip ex ea commodo.</p>
+            <a href="https://www.transhumans.xyz">Some action</a>
+          </article>
+
+          <article class="card">
+            <picture>
+              <img
+                class="card-img"
+                src="https://assets.codepen.io/2585/Reflecting.svg"
+                alt="placeholder-hand-drawn-vector"
+              />
+            </picture>
+            <h5>Sed do eiusmod tempor incididunt</h5>
+            <p>Duis aute irure dolor in reprehenderit.</p>
+            <a href="https://www.transhumans.xyz">Ready</a>
+          </article>
+        </section>
+        <section id="section-4">
+          <article class="card">
+            <picture>
+              <img src="https://assets.codepen.io/2585/Rogue.svg" />
+            </picture>
+            <h5>Lorem ipsum dolor sit amet</h5>
+            <p>Ut enim ad minim veniam, quis nostrud.</p>
+            <a href="https://www.transhumans.xyz">Check it out</a>
+          </article>
+
+          <article class="card">
+            <picture>
+              <img src="https://assets.codepen.io/2585/Waiting.svg" />
+            </picture>
+            <h5>Consectetur adipiscing elit</h5>
+            <p>Exercitation ullamco laboris nisi ut aliquip ex ea commodo.</p>
+            <a href="https://www.transhumans.xyz">Some action</a>
+          </article>
+
+          <article class="card">
+            <picture>
+              <img
+                class="card-img"
+                src="https://assets.codepen.io/2585/Runner.svg"
+                alt="placeholder-hand-drawn-vector"
+              />
+            </picture>
+            <h5>Sed do eiusmod tempor incididunt</h5>
+            <p>Duis aute irure dolor in reprehenderit.</p>
+            <a href="https://www.transhumans.xyz">Ready</a>
+          </article>
+        </section>
+      </div>
+    </div>
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Necessitatibus, alias repudiandae delectus dolor quis nisi voluptatem dolorum laborum illo, commodi odio voluptatibus iure sit doloribus. Maiores labore voluptate accusamus fugit.
+    Voluptatem ratione unde optio tenetur in magni autem voluptas sed ipsam minima animi enim a, hic adipisci nemo at. Voluptate nostrum tempore, cupiditate blanditiis id unde rem quaerat nemo consequuntur.
+    Velit iure rem iusto laborum fuga quibusdam, voluptates corporis dolorum ipsa quae adipisci omnis beatae cum neque amet laboriosam fugit sunt in veniam, voluptatibus distinctio cupiditate vero. Odio, amet facere!
+    Reiciendis aut eveniet quaerat molestias, veniam, eos, dolorem fugit soluta omnis blanditiis facilis. Explicabo asperiores corrupti eaque nostrum ratione commodi eos ex, praesentium autem totam iure dolorem ipsum assumenda doloribus!
+    Cumque sint eos accusantium. Soluta, ducimus. Possimus dolorum voluptatem ullam officiis fugiat, quaerat reprehenderit corporis ipsam excepturi recusandae nihil officia reiciendis impedit, obcaecati est quidem sunt praesentium nam sapiente! Hic.
+  Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe similique, amet totam tempora voluptas numquam praesentium voluptatem ullam, ex commodi autem ipsam! Reprehenderit velit modi quasi voluptatem officia tempora et.
+  Accusantium totam iste dolorem sint. Quia quas officiis enim accusantium repudiandae, soluta dolor exercitationem nihil nisi, rem quo? Voluptatibus cum excepturi magni nesciunt accusamus. Vero ducimus dolorum autem recusandae dicta?
+  Dignissimos quo tempora minima excepturi, dolorum sunt nam modi dolores praesentium in hic quam. Neque omnis temporibus nemo earum illo facere minus nulla culpa quia qui. Eos tempore nulla beatae?
+  Saepe facere sapiente error enim expedita nobis omnis molestiae. Reiciendis repellendus quae accusantium tempora iste laborum labore veniam illo numquam veritatis qui aperiam, vitae autem provident vel? Minus, quis iusto?</p>
+
+  </body>
+</html>

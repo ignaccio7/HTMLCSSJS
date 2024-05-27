@@ -1,0 +1,175 @@
+/**************** Fonts ******************/
+@font-face {
+	font-family: 'Roboto';
+	src:url('../font/fontFamily/Roboto-Regular.ttf') format('truetype');
+}
+@font-face {
+	font-family: 'Roboto-Bold';
+	src:url('../font/fontFamily/Roboto-Bold.ttf') format('truetype');
+}
+
+/**************** Custom Properties ******************/
+
+:root{
+	--primary-color:#03A9F4;
+	--light-primary-color:#B3E5FC;
+	--dark-primary-color:#0288D1;
+	--second-color:#009688;
+	--black-color:#000000;
+	--white-color:#ffffff;
+	--text-color:#212121;
+	--text-second-color:#757575;
+}
+
+/*
+
+/**************** Reset ******************/
+html{
+	box-sizing: inherit;
+	font-family: 'Roboto', monospace;
+}
+
+*,
+*::before,
+*::after{
+	box-sizing: border-box;
+}
+
+body{
+	margin: 0;
+}
+
+
+/**************** Components ******************/
+
+/**************** Utilities ******************/
+.container{
+	max-width: 95%;
+	margin: 0 auto;
+}
+
+/**************** Site Styles  ******************/
+
+.home-body{
+	display: grid;
+	height: 100vh;
+	grid-template-rows: 1fr 4fr;
+}
+
+.header{
+	width: 100%;
+	height: auto;
+}
+
+.header .social-icons {
+	height: 3rem;
+	background-color: var(--primary-color);
+	display: flex;
+	flex-direction: row-reverse;
+	align-items: center;
+}
+
+.header .icons a:last-child{
+	padding-right: .5rem;
+}
+
+.header .icons a{	
+	color: var(--white-color);
+	text-decoration: none;
+}
+
+.header .header-nav{
+	display: grid;
+	grid-template-columns: repeat(auto-fit,minmax(250px,1fr));
+	justify-items:center; 
+	align-items: center;
+}
+
+.nav-logo-container{
+	text-align: center;
+}
+
+.header-nav img{
+	width: clamp(200px,90%,300px);
+}
+.header-nav h1 > a{
+	color: black;
+	letter-spacing: .3rem;
+	text-decoration: none;
+	color: var(--text-color);
+	border-bottom: thin dashed var(--text-color);
+}
+
+
+.home-main{	
+	height: 100%;	
+	background-image: url('../assets/img/Cover.png');
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position: center;
+	display: flex;
+	justify-content: center;
+	align-items: center; 
+
+}
+
+.home-main section {
+	text-align: center;
+}
+
+.home-main p{
+	color: var(--white-color);
+	font-size: 
+	font-weight: bold;
+	letter-spacing: .8rem;
+	font-size: clamp(1.5rem,3.5vw,5rem);
+	font-family: 'Roboto-Bold';
+}
+
+.home-main button{
+	background-color: var(--second-color);
+	padding: 1rem 1.5rem;
+	border: none;
+	border-radius: 1rem;
+	letter-spacing: .2rem;
+	color: var(--white-color);
+	font-weight: bold;
+	text-transform: uppercase;
+	cursor: pointer;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
